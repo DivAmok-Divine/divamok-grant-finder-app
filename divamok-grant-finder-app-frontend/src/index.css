@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────
+   DIVAMOK design tokens — Soft & Vibrant · EMERALD
+   rounded-md edges · flat solid color · ZERO gradients
+   ─────────────────────────────────────────────── */
+@theme {
+  --color-canvas: #F5F8F6;
+  --color-surface: #FFFFFF;
+  --color-ink: #16211C;
+  --color-muted: #6B7A72;
+  --color-brand: #059669;
+  --color-brand-press: #047857;
+  --color-soft: #ECFDF5;
+  --color-block: #EEF2F0;
+  --color-line: #E2E8E4;
+  --color-amberbg: #FFF6E6;
+  --color-ambertx: #B7791F;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Hide scrollbars across the app — content still scrolls, just no visible bar */
+* {
+  scrollbar-width: none; /* Firefox */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome / Safari / Edge */
+}
+
+::selection {
+  background: var(--color-brand);
+  color: #fff;
+}

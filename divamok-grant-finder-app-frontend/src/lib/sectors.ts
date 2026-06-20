@@ -1,0 +1,35 @@
+// Sector taxonomy — a recognizable blend of NAICS industry subsectors and
+// Grants.gov funding categories. Comprehensive but readable (we deliberately
+// avoid the raw 1,000-entry NAICS labels). Feeds the searchable multi-select
+// and the matcher's query terms. Grow concepts.ts to add synonyms over time.
+export const SECTORS: string[] = [
+  'Advanced manufacturing', 'Aerospace', 'Affordable housing', 'Aging & elder care',
+  'Agriculture', 'Agtech', 'AI & machine learning', 'Animal welfare',
+  'Aquaculture & fisheries', 'Architecture & design', 'Arts', 'Astronomy',
+  'Automotive', 'Aviation', 'Biotechnology', 'Blockchain', 'Chemicals',
+  'Childcare & early childhood', 'Civil rights & equity', 'Clean energy', 'Climate',
+  'Clinical research', 'Cloud computing', 'Community development', 'Conservation',
+  'Construction', 'Culture & heritage', 'Cybersecurity', 'Data & analytics', 'Defense',
+  'Democracy & governance', 'Diagnostics', 'Disability inclusion', 'Earth sciences',
+  'Economic development', 'Edtech', 'Education', 'Electronics & hardware',
+  'Emergency management', 'Energy storage', 'Entrepreneurship', 'Environment',
+  'Environmental justice', 'Film & media', 'Financial services', 'Fintech',
+  'Food & beverage', 'Food security', 'Forestry', 'Gaming', 'Genomics', 'Global health',
+  'Government & public sector', 'Healthcare', 'Higher education', 'Homelessness',
+  'Housing', 'Human rights', 'Humanities', 'Immigration & refugees',
+  'Indigenous communities', 'Infrastructure', 'Innovation & R&D', 'Insurance',
+  'International development', 'Journalism & news', 'Justice & legal', 'K-12 education',
+  'Libraries', 'Literacy', 'Logistics & supply chain', 'Manufacturing', 'Maritime',
+  'Materials science', 'Mathematics', 'Medical devices', 'Mental health', 'Mining',
+  'Mobility & EVs', 'Museums', 'Music', 'Nanotechnology', 'Nonprofit capacity',
+  'Nuclear energy', 'Nursing', 'Nutrition', 'Oceanography', 'Oil & gas',
+  'Performing arts', 'Pharmaceuticals', 'Physics', 'Public health', 'Public safety',
+  'Quantum computing', 'Rail', 'Real estate', 'Recycling & waste', 'Religion & faith',
+  'Renewable energy', 'Retail & e-commerce', 'Robotics', 'Rural development',
+  'Scientific research', 'Semiconductors', 'Small business', 'Smart cities',
+  'Social services', 'Software', 'Solar energy', 'Space & satellites',
+  'Sports & recreation', 'STEM education', 'Sustainability', 'Telecommunications',
+  'Tourism & hospitality', 'Transportation', 'Urban development', 'Veterans',
+  'Vocational training', 'Water & sanitation', 'Wind energy', 'Women & gender',
+  'Workforce development', 'Youth development',
+].sort((a, b) => a.localeCompare(b))

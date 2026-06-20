@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Builds / caches
+dist/
+build/
+**/dist/
+.vite/
+**/.vite/
+*.tsbuildinfo
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Database (contains user accounts / password hashes — never commit)
+*.sqlite
+*.sqlite3
+**/database.sqlite
+
+# Runtime / process files
+.api.pid
+.frontend.pid
+*.log
+logs/
+
+# OS / editor
+.DS_Store
+.idea/
+*.swp
+
+# Local tooling
+.claude/settings.local.json

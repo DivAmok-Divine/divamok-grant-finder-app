@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>divamok — design preview (Emerald)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ───────────────────────────────────────────────
+     DIVAMOK — Soft & Vibrant · EMERALD
+     Clean canvas · rounded-md (~6px) edges · flat solid color · ZERO gradients
+     DESIGN PREVIEW (look only). Real app = React + Vite.
+     ─────────────────────────────────────────────── */
+  :root{
+    --canvas:#F5F8F6;    /* clean light canvas      */
+    --surface:#FFFFFF;
+    --ink:#16211C;       /* near-black, faint green */
+    --muted:#6B7A72;     /* cool gray-green         */
+    --emerald:#059669;   /* primary                 */
+    --emerald-press:#047857;
+    --soft:#ECFDF5;      /* emerald tint            */
+    --neutral:#EEF2F0;   /* neutral soft block      */
+    --line:#E2E8E4;      /* borders                 */
+    --amber-bg:#FFF6E6;  /* deadline pop only       */
+    --amber-tx:#B7791F;
+    --slate:#F1F4F2;
+    --r:8px;             /* cards   (rounded-lg)    */
+    --r-sm:6px;          /* controls (rounded-md)   */
+    --shadow:0 6px 22px rgba(20,50,35,.06), 0 1px 4px rgba(20,50,35,.04);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased}
+  body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+       background:var(--canvas);color:var(--ink);line-height:1.5}
+  ::selection{background:var(--emerald);color:#fff}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px}
+
+  /* ── header ── */
+  header{position:sticky;top:0;background:rgba(245,248,246,.85);backdrop-filter:blur(8px);
+         border-bottom:1px solid var(--line);z-index:5}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:-.02em}
+  .logo{width:30px;height:30px;border-radius:var(--r-sm);background:var(--emerald);position:relative;flex:none}
+  .logo::after{content:"";position:absolute;width:8px;height:8px;border-radius:2px;
+               background:#fff;right:6px;bottom:6px}
+  nav{display:flex;gap:8px;align-items:center}
+  nav a{font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;
+        padding:9px 15px;border-radius:var(--r-sm);opacity:.7}
+  nav a:hover{opacity:1;background:var(--neutral)}
+  nav a.signin{background:var(--ink);color:#fff;opacity:1}
+  nav a.signin:hover{background:#000}
+
+  /* ── intake ── */
+  .pill-eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--soft);
+    color:var(--emerald-press);font-weight:700;font-size:13px;padding:7px 13px;border-radius:var(--r-sm)}
+  .pill-eyebrow .dot{width:7px;height:7px;border-radius:2px;background:var(--emerald)}
+  h1{font-weight:800;letter-spacing:-.03em;line-height:1.04;
+     font-size:clamp(2.4rem,5.6vw,3.9rem);margin:22px 0 0;max-width:16ch}
+  h1 .hl{color:var(--emerald)}
+  .lede{font-size:18px;color:var(--muted);max-width:48ch;margin-top:18px;font-weight:500}
+  section{padding:54px 0}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+  .intake{padding:34px;margin-top:34px}
+
+  .seg{display:inline-flex;background:var(--neutral);padding:4px;border-radius:var(--r);gap:4px}
+  .seg button{border:0;background:none;font:inherit;font-weight:700;font-size:14px;
+    padding:9px 20px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted)}
+  .seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(20,50,35,.10)}
+  .seg-note{font-size:13.5px;color:var(--muted);margin-top:12px;min-height:18px}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 26px;margin-top:26px}
+  .field{display:flex;flex-direction:column}
+  .field.full{grid-column:1/-1}
+  label{font-size:13px;font-weight:700;margin-bottom:9px;color:var(--ink)}
+  input[type=text],select,textarea{font:inherit;font-size:15.5px;color:var(--ink);
+    background:var(--canvas);border:1.5px solid var(--line);border-radius:var(--r-sm);
+    padding:13px 15px;outline:none;width:100%}
+  input::placeholder,textarea::placeholder{color:#A9B4AE}
+  input:focus,select:focus,textarea:focus{border-color:var(--emerald);background:#fff}
+  textarea{resize:vertical;min-height:74px}
+  select{appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A72' stroke-width='1.7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 15px center}
+
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{font:inherit;font-size:14px;font-weight:600;border:1.5px solid var(--line);
+    background:var(--surface);padding:9px 15px;border-radius:var(--r-sm);cursor:pointer;color:var(--ink)}
+  .chip:hover{border-color:var(--emerald)}
+  .chip.on{background:var(--emerald);border-color:var(--emerald);color:#fff}
+
+  .cta{display:inline-flex;align-items:center;gap:11px;margin-top:30px;font:inherit;
+    font-weight:700;font-size:16px;background:var(--emerald);color:#fff;border:0;
+    padding:15px 24px;border-radius:var(--r-sm);cursor:pointer;box-shadow:0 5px 16px rgba(5,150,105,.26)}
+  .cta:hover{background:var(--emerald-press)}
+  .cta .arw{font-size:18px}
+
+  /* ── matches ── */
+  .back{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:700;font-size:14px;
+    color:var(--emerald-press);background:var(--soft);border:0;padding:9px 15px;border-radius:var(--r-sm);cursor:pointer}
+  .mhead{margin:22px 0 6px}
+  .mhead h2{font-weight:800;letter-spacing:-.02em;font-size:clamp(1.7rem,4vw,2.4rem)}
+  .mhead .sub{font-size:14.5px;color:var(--muted);margin-top:6px}
+  .filters{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 26px}
+  .filters .chip{font-size:13.5px;padding:8px 14px}
+  .filters .chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+  .mcard{display:grid;grid-template-columns:auto 1fr auto;gap:0 22px;align-items:start;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);padding:24px 26px;margin-bottom:16px;transition:transform .12s ease, box-shadow .12s ease}
+  .mcard:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(20,50,35,.10)}
+  .score{width:60px;height:60px;border-radius:var(--r-sm);background:var(--soft);color:var(--emerald-press);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none}
+  .score b{font-size:20px;font-weight:800;line-height:1}
+  .score small{font-size:9px;font-weight:700;letter-spacing:.08em;margin-top:3px;opacity:.85}
+  .score.warm{background:var(--neutral);color:var(--muted)}
+  .score.low{background:#F3F5F4;color:#9AA8A1}
+  .ttl{font-weight:800;font-size:18.5px;letter-spacing:-.01em}
+  .funder{font-size:14px;color:var(--muted);margin-top:3px;font-weight:500}
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+  .t{font-size:13px;font-weight:700;padding:5px 11px;border-radius:var(--r-sm)}
+  .t.amt{background:var(--neutral);color:var(--ink)}
+  .t.due{background:var(--amber-bg);color:var(--amber-tx)}
+  .t.open{background:var(--soft);color:var(--emerald-press)}
+  .t.award{background:var(--neutral);color:var(--muted)}
+  .why{font-size:14.5px;margin-top:14px;line-height:1.55;display:flex;gap:9px}
+  .why .ck{color:var(--emerald);font-weight:800;flex:none}
+  .why b{font-weight:700}
+  .verify{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:#5F6E66;
+    background:var(--slate);border-radius:var(--r-sm);padding:11px 14px;margin-top:13px;line-height:1.45}
+  .verify .ic{flex:none;color:var(--muted)}
+  .save{font:inherit;font-weight:700;font-size:13.5px;color:var(--ink);background:var(--surface);
+    border:1.5px solid var(--line);padding:10px 16px;border-radius:var(--r-sm);cursor:pointer;white-space:nowrap}
+  .save:hover{border-color:var(--emerald)}
+  .save.on{background:var(--emerald);border-color:var(--emerald);color:#fff}
+
+  footer{border-top:1px solid var(--line);padding:30px 0;font-size:13px;color:var(--muted);margin-top:20px}
+  footer b{color:var(--ink)}
+  .hide{display:none}
+  @media(max-width:720px){
+    .grid{grid-template-columns:1fr}
+    .mcard{grid-template-columns:auto 1fr;gap:0 16px}
+    .mcard .save{grid-column:1/-1;justify-self:start;margin-top:14px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand"><span class="logo"></span> divamok</div>
+    <nav>
+      <a href="#">How it works</a>
+      <a href="#">Saved</a>
+      <a href="#" class="signin">Sign in</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ───────── INTAKE ───────── -->
+<main id="view-intake">
+<section class="wrap">
+  <span class="pill-eyebrow"><span class="dot"></span> Built for founders</span>
+  <h1>Find the grants you're <span class="hl">actually eligible</span> for.</h1>
+  <p class="lede">Tell us about your company once. We match you against live US &amp; EU funding — and show you exactly why each one fits.</p>
+
+  <div class="card intake">
+    <div class="seg" id="seg">
+      <button class="on" data-aud="startup">Startup</button>
+      <button data-aud="nonprofit">Nonprofit</button>
+      <button data-aud="individual">Individual</button>
+    </div>
+    <div class="seg-note" id="segNote"></div>
+
+    <div class="grid">
+      <div class="field">
+        <label>Company name</label>
+        <input type="text" id="company" placeholder="Acme Robotics" />
+      </div>
+      <div class="field">
+        <label>Country of incorporation</label>
+        <select id="country">
+          <option>United States</option><option>United Kingdom</option>
+          <option>Germany</option><option>France</option>
+          <option>Nigeria</option><option>Kenya</option><option>Other</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label>Stage</label>
+        <div class="chips" data-single id="stage">
+          <button type="button" class="chip on">Idea</button>
+          <button type="button" class="chip">Pre-seed</button>
+          <button type="button" class="chip">Seed</button>
+          <button type="button" class="chip">Growth</button>
+        </div>
+      </div>
+
+      <div class="field full">
+        <label>Sector</label>
+        <div class="chips" id="sector">
+          <button type="button" class="chip on">Clean energy</button>
+          <button type="button" class="chip">AI / software</button>
+          <button type="button" class="chip">Health / bio</button>
+          <button type="button" class="chip">Manufacturing</button>
+          <button type="button" class="chip">Agtech</button>
+        </div>
+      </div>
+
+      <div class="field full">
+        <label>What are you building?</label>
+        <textarea id="pitch" placeholder="A line or two — what you do and the R&D problem you're solving."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Funding needed</label>
+        <select><option>Under $100k</option><option selected>$100k – $500k</option><option>$500k – $2M</option><option>$2M+</option></select>
+      </div>
+      <div class="field">
+        <label>Team size</label>
+        <select><option>Just me</option><option selected>2 – 10</option><option>11 – 50</option><option>50+</option></select>
+      </div>
+    </div>
+
+    <button class="cta" id="go"><span>Find my grants</span><span class="arw">→</span></button>
+  </div>
+</section>
+</main>
+
+<!-- ───────── MATCHES ───────── -->
+<main id="view-matches" class="hide">
+<section class="wrap">
+  <button class="back" id="back">← Edit profile</button>
+  <div class="mhead">
+    <h2 id="mTitle">6 matches</h2>
+    <div class="sub">Eligibility-ranked · hard filters applied, then matched on meaning</div>
+  </div>
+  <div class="filters">
+    <button class="chip on">All</button>
+    <button class="chip">Open calls</button>
+    <button class="chip">High fit</button>
+    <button class="chip">No geo blockers</button>
+  </div>
+  <div id="cards"></div>
+  <footer>Sources this run: <b>Grants.gov</b> · <b>SBIR/STTR</b> · <b>EU Funding &amp; Tenders</b>. Match data is illustrative in this preview — live sources are verified &amp; ready to wire.</footer>
+</section>
+</main>
+
+<footer class="wrap" id="rootFoot">divamok — <b>design preview</b> · Soft &amp; Vibrant, Emerald, rounded-md edges, zero gradients. Real app builds in React + Vite next.</footer>
+
+<script>
+  const segNote={startup:'',
+    nonprofit:'In the full app this swaps to mission, programs & 501(c) status. Startup is wired up in this preview.',
+    individual:'In the full app this swaps to discipline, portfolio & fellowship history. Startup is wired up in this preview.'};
+  document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('#seg button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');document.getElementById('segNote').textContent=segNote[b.dataset.aud];
+  });
+  document.querySelectorAll('.chips').forEach(g=>{
+    const single=g.hasAttribute('data-single');
+    g.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+      if(single)g.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+      c.classList.toggle('on');});
+  });
+
+  const GRANTS=[
+    {s:96,tier:'',t:'SBIR Phase I',f:'U.S. Department of Energy',amt:'$50k – $256k',due:'Closes Aug 14',open:true,
+     why:'<b>Strong fit:</b> US-incorporated startup, clean-energy R&D, pre-revenue is fine.',
+     v:'Verify: must be majority US-owned, for-profit, under 500 employees.'},
+    {s:91,tier:'',t:'STTR Phase I',f:'National Science Foundation',amt:'$75k – $305k',due:'Closes Sep 02',open:true,
+     why:'<b>Strong fit:</b> deep-tech R&D, non-dilutive, matches your stage.',
+     v:'Verify: STTR needs a US research-institution partner (≥30% of work).'},
+    {s:88,tier:'',t:'SBIR Phase I',f:'National Institutes of Health',amt:'$150k – $300k',due:'Closes Sep 05',open:true,
+     why:'<b>Good fit:</b> non-dilutive R&D for small US firms.',
+     v:'Verify: project needs a human-health / biomedical angle.'},
+    {s:71,tier:'warm',t:'EIC Accelerator',f:'European Innovation Council (EU)',amt:'€0.5M – €2.5M + equity',due:'Closes Oct 09',open:true,
+     why:'<b>Sector match, geo blocker:</b> deep-tech scaleup fit — but needs an EU entity.',
+     v:'Geo filter: requires EU / associated-country incorporation. Soft-ranked, not hidden.'},
+    {s:64,tier:'warm',t:'Smart Grants',f:'Innovate UK (UKRI)',amt:'£100k – £500k',due:'Closes Jul 30',open:true,
+     why:'<b>Theme match, geo blocker:</b> game-changing innovation — UK lead required.',
+     v:'Geo filter: lead applicant must be UK-registered.'},
+    {s:58,tier:'low',t:'Clean Energy Manufacturing Prize',f:'U.S. Dept. of Energy',amt:'$200k',due:'Rolling',open:false,
+     why:'<b>Adjacent:</b> energy theme aligns; this is a prize track, not an open call.',
+     v:'Type: award/prize — flagged so you don\'t mistake it for an open call.'}
+  ];
+  function render(){
+    const box=document.getElementById('cards');box.innerHTML='';
+    GRANTS.forEach((g,i)=>{
+      const el=document.createElement('div');el.className='mcard';
+      el.innerHTML=`
+        <div class="score ${g.tier}"><b>${g.s}</b><small>% FIT</small></div>
+        <div>
+          <div class="ttl">${g.t}</div>
+          <div class="funder">${g.f}</div>
+          <div class="tags">
+            <span class="t amt">${g.amt}</span>
+            <span class="t due">${g.due}</span>
+            <span class="t ${g.open?'open':'award'}">${g.open?'Open call':'Award / prize'}</span>
+          </div>
+          <div class="why"><span class="ck">✓</span><span>${g.why}</span></div>
+          <div class="verify"><span class="ic">⚑</span><span>${g.v}</span></div>
+        </div>
+        <button class="save" data-i="${i}">Save</button>`;
+      box.appendChild(el);
+    });
+    box.querySelectorAll('.save').forEach(s=>s.onclick=()=>{
+      s.classList.toggle('on');s.textContent=s.classList.contains('on')?'Saved ✓':'Save';});
+  }
+  document.getElementById('go').onclick=()=>{
+    const btn=document.getElementById('go'),name=(document.getElementById('company').value||'your company').trim();
+    btn.querySelector('span').textContent='Matching…';
+    setTimeout(()=>{
+      render();
+      document.getElementById('mTitle').textContent=`6 matches for ${name}`;
+      document.getElementById('view-intake').classList.add('hide');
+      document.getElementById('rootFoot').classList.add('hide');
+      document.getElementById('view-matches').classList.remove('hide');
+      window.scrollTo(0,0);btn.querySelector('span').textContent='Find my grants';
+    },550);
+  };
+  document.getElementById('back').onclick=()=>{
+    document.getElementById('view-matches').classList.add('hide');
+    document.getElementById('view-intake').classList.remove('hide');
+    document.getElementById('rootFoot').classList.remove('hide');
+    window.scrollTo(0,0);
+  };
+</script>
+</body>
+</html>

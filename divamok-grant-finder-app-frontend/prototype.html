@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>divamok — grant finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  /* ───────────────────────────────────────────────
+     DIVAMOK — Stark Modernist
+     Pure white · true black · ONE electric accent · NO gradients
+     ─────────────────────────────────────────────── */
+  :root{
+    --ink:#0A0A0A;
+    --paper:#FFFFFF;
+    --accent:#1F44FF;     /* electric cobalt — swap to #FF5A1F for orange */
+    --muted:#6B6B6B;
+    --line:#E6E6E6;
+    --hair:#0A0A0A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.5;
+  }
+  ::selection{background:var(--accent);color:#fff}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+
+  /* ── header ── */
+  header{border-bottom:1px solid var(--hair)}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .mark{font-weight:900;letter-spacing:-.04em;font-size:22px}
+  .mark b{color:var(--accent)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;
+       text-transform:uppercase;border:1px solid var(--accent);color:var(--accent);
+       padding:3px 7px;margin-left:10px;vertical-align:middle}
+  nav{display:flex;gap:28px;font-size:14px;font-weight:600}
+  nav a{color:var(--ink);text-decoration:none;opacity:.55}
+  nav a:hover{opacity:1}
+
+  /* ── eyebrow + display ── */
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+           color:var(--accent);margin-bottom:18px}
+  h1{font-weight:800;letter-spacing:-.035em;line-height:1.0;
+     font-size:clamp(2.6rem,6.5vw,4.6rem);max-width:14ch}
+  h1 .u{color:var(--accent)}
+  .lede{font-size:18px;color:var(--muted);max-width:46ch;margin-top:22px;font-weight:450}
+
+  section{padding:64px 0}
+
+  /* ── segmented control (adaptive intake selector) ── */
+  .seg{display:inline-flex;border:1px solid var(--hair);margin:38px 0 8px}
+  .seg button{appearance:none;background:none;border:0;border-right:1px solid var(--hair);
+              font:inherit;font-weight:700;font-size:13px;letter-spacing:.02em;
+              padding:11px 18px;cursor:pointer;color:var(--ink);text-transform:uppercase}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:#fff}
+  .seg-note{font-size:13px;color:var(--muted);margin-top:8px;min-height:18px}
+
+  /* ── form ── */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:28px 36px;margin-top:34px}
+  .field{display:flex;flex-direction:column}
+  .field.full{grid-column:1 / -1}
+  label{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+  input[type=text],select,textarea{
+    font:inherit;font-size:16px;border:0;border-bottom:1.5px solid var(--ink);
+    background:none;padding:9px 0;color:var(--ink);outline:none;width:100%}
+  input::placeholder,textarea::placeholder{color:#B5B5B5}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+  textarea{resize:vertical;min-height:64px;border:1.5px solid var(--ink);padding:12px}
+  textarea:focus{border-color:var(--accent)}
+  select{appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230A0A0A' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 2px center}
+
+  /* ── chips ── */
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--ink);
+        background:none;padding:8px 15px;cursor:pointer;color:var(--ink);transition:none}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  /* ── primary button ── */
+  .cta{display:inline-flex;align-items:center;gap:12px;margin-top:42px;
+       font:inherit;font-weight:800;font-size:16px;letter-spacing:.01em;
+       background:var(--accent);color:#fff;border:1px solid var(--accent);
+       padding:16px 26px;cursor:pointer}
+  .cta:hover{background:var(--ink);border-color:var(--ink)}
+  .cta .arw{font-size:18px;line-height:1}
+
+  /* ── matches ── */
+  .mhead{display:flex;align-items:flex-end;justify-content:space-between;
+         border-bottom:1px solid var(--hair);padding-bottom:18px;margin-bottom:8px}
+  .mhead h2{font-weight:800;letter-spacing:-.03em;font-size:clamp(1.8rem,4vw,2.6rem)}
+  .mhead .sub{font-size:14px;color:var(--muted);margin-top:6px}
+  .back{font:inherit;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+        background:none;border:0;cursor:pointer;color:var(--accent)}
+
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 30px}
+  .filters .chip{font-size:13px;padding:6px 13px}
+
+  .card{display:grid;grid-template-columns:96px 1fr auto;gap:0 26px;
+        border:1px solid var(--ink);padding:24px 26px;margin-bottom:18px;
+        align-items:start;transition:transform .08s ease, box-shadow .08s ease;background:#fff}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
+  .score{font-weight:900;font-size:30px;letter-spacing:-.04em;line-height:1}
+  .score small{font-size:13px;font-weight:700;color:var(--muted);display:block;margin-top:6px;letter-spacing:.04em}
+  .bar{height:5px;background:var(--line);margin-top:10px;width:78px}
+  .bar i{display:block;height:100%;background:var(--accent)}
+  .ttl{font-weight:800;font-size:19px;letter-spacing:-.01em;line-height:1.2}
+  .funder{font-size:14px;color:var(--muted);margin-top:4px;font-weight:500}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:14px;font-weight:600}
+  .meta .amt{color:var(--ink)}
+  .meta .due{color:var(--accent)}
+  .why{font-size:14px;color:var(--ink);margin-top:14px;line-height:1.5}
+  .why b{font-weight:700}
+  .verify{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.02em;
+          background:#F4F4F4;border-left:3px solid var(--accent);padding:7px 12px;margin-top:14px}
+  .save{font:inherit;font-weight:700;font-size:13px;border:1px solid var(--ink);
+        background:none;padding:9px 16px;cursor:pointer;white-space:nowrap}
+  .save.on{background:var(--ink);color:#fff}
+
+  .ribbon{font-size:13px;color:var(--muted);border-top:1px solid var(--line);
+          margin-top:14px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .ribbon b{color:var(--ink);font-weight:700}
+
+  footer{border-top:1px solid var(--hair);padding:34px 0;font-size:13px;color:var(--muted)}
+  footer b{color:var(--ink)}
+
+  .hide{display:none}
+  @media(max-width:720px){
+    .grid{grid-template-columns:1fr}
+    .card{grid-template-columns:64px 1fr;gap:0 18px}
+    .card .save{grid-column:1 / -1;margin-top:16px;justify-self:start}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="mark">DIVA<b>MOK</b><span class="tag">Beta</span></div>
+    <nav><a href="#">How it works</a><a href="#">Sources</a><a href="#">Sign in</a></nav>
+  </div>
+</header>
+
+<!-- ───────────── VIEW 1 · INTAKE ───────────── -->
+<main id="view-intake">
+<section class="wrap">
+  <div class="eyebrow">Grant finder for founders</div>
+  <h1>Find the grants you're <span class="u">actually eligible</span> for.</h1>
+  <p class="lede">Tell us about your company once. We match you against live US, EU &amp; UK funding — and tell you exactly why each one fits.</p>
+
+  <div class="seg" id="seg">
+    <button class="on" data-aud="startup">Startup</button>
+    <button data-aud="nonprofit">Nonprofit</button>
+    <button data-aud="individual">Individual</button>
+  </div>
+  <div class="seg-note" id="segNote"></div>
+
+  <form id="intake" onsubmit="return false">
+    <div class="grid">
+      <div class="field">
+        <label>Company name</label>
+        <input type="text" id="company" placeholder="Acme Robotics" />
+      </div>
+      <div class="field">
+        <label>Country of incorporation</label>
+        <select id="country">
+          <option>United States</option>
+          <option>United Kingdom</option>
+          <option>Germany</option>
+          <option>France</option>
+          <option>Nigeria</option>
+          <option>Kenya</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label>Stage</label>
+        <div class="chips" data-single id="stage">
+          <button type="button" class="chip on">Idea</button>
+          <button type="button" class="chip">Pre-seed</button>
+          <button type="button" class="chip">Seed</button>
+          <button type="button" class="chip">Growth</button>
+        </div>
+      </div>
+
+      <div class="field full">
+        <label>Sector</label>
+        <div class="chips" id="sector">
+          <button type="button" class="chip on">Clean energy</button>
+          <button type="button" class="chip">AI / software</button>
+          <button type="button" class="chip">Health / bio</button>
+          <button type="button" class="chip">Advanced manufacturing</button>
+          <button type="button" class="chip">Agtech</button>
+          <button type="button" class="chip">Other</button>
+        </div>
+      </div>
+
+      <div class="field full">
+        <label>What are you building?</label>
+        <textarea id="pitch" placeholder="One or two lines — what you do and the R&D problem you're solving."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Funding needed</label>
+        <select id="amount">
+          <option>Under $100k</option>
+          <option selected>$100k – $500k</option>
+          <option>$500k – $2M</option>
+          <option>$2M+</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Team size</label>
+        <select id="team">
+          <option>Just me</option>
+          <option selected>2 – 10</option>
+          <option>11 – 50</option>
+          <option>50+</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="cta" id="go"><span>Find my grants</span><span class="arw">→</span></button>
+  </form>
+</section>
+</main>
+
+<!-- ───────────── VIEW 2 · MATCHES ───────────── -->
+<main id="view-matches" class="hide">
+<section class="wrap">
+  <button class="back" id="back">← Edit profile</button>
+  <div class="mhead" style="margin-top:18px">
+    <div>
+      <h2 id="mTitle">6 matches</h2>
+      <div class="sub" id="mSub">Ranked by eligibility fit · hard filters applied, then semantic match</div>
+    </div>
+  </div>
+  <div class="filters">
+    <button class="chip on">All</button>
+    <button class="chip">Open calls</button>
+    <button class="chip">High fit (85%+)</button>
+    <button class="chip">No geo blockers</button>
+  </div>
+  <div id="cards"></div>
+  <div class="ribbon">
+    <span>Sources this run: <b>Grants.gov</b> · <b>SBIR.gov</b> · <b>EU Funding &amp; Tenders</b> · <b>Innovate UK</b></span>
+    <span><b>6</b> shown · prototype data</span>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">divamok — prototype. Design: Stark Modernist, zero gradients. Match data illustrative; live sources verified &amp; ready to wire. <b>Built to feel the product.</b></div></footer>
+
+<script>
+  // ── adaptive intake selector ──
+  const segNote = {
+    startup:'',
+    nonprofit:'In the full version this swaps to mission, programs & 501(c) status. Startup is wired up in this preview.',
+    individual:'In the full version this swaps to discipline, portfolio & fellowship history. Startup is wired up in this preview.'
+  };
+  document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('#seg button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    document.getElementById('segNote').textContent = segNote[b.dataset.aud];
+  });
+
+  // ── chips ──
+  document.querySelectorAll('.chips').forEach(group=>{
+    const single = group.hasAttribute('data-single');
+    group.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+      if(single) group.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+      c.classList.toggle('on');
+    });
+  });
+
+  // ── prototype match data (illustrative; shows eligibility logic) ──
+  const GRANTS = [
+    {score:96,title:'SBIR Phase I',funder:'U.S. Department of Energy',amt:'$50k – $256k',due:'Closes Aug 14',open:true,
+     why:'<b>Strong fit:</b> US-incorporated startup, clean-energy R&D, pre-revenue is fine, team under 500.',
+     verify:'Verify: must be majority US-owned & for-profit, < 500 employees.'},
+    {score:91,title:'STTR Phase I',funder:'National Science Foundation',amt:'$75k – $305k',due:'Closes Sep 02',open:true,
+     why:'<b>Strong fit:</b> deep-tech R&D, non-dilutive, matches your stage.',
+     verify:'Verify: STTR requires a US research-institution partner (≥30% of work).'},
+    {score:88,title:'SBIR Phase I',funder:'National Institutes of Health',amt:'$150k – $300k',due:'Closes Sep 05',open:true,
+     why:'<b>Good fit:</b> non-dilutive R&D for small US firms.',
+     verify:'Verify: project must have a human-health / biomedical relevance.'},
+    {score:71,title:'EIC Accelerator',funder:'European Innovation Council (EU)',amt:'€0.5M – €2.5M + equity',due:'Closes Oct 09',open:true,
+     why:'<b>Sector match, geography blocker:</b> deep-tech scaleup fit — but requires an EU entity.',
+     verify:'Geo filter: needs an EU / associated-country incorporation. Soft-ranked, not excluded.'},
+    {score:64,title:'Smart Grants',funder:'Innovate UK (UKRI)',amt:'£100k – £500k',due:'Closes Jul 30',open:true,
+     why:'<b>Theme match, geography blocker:</b> game-changing innovation — UK lead required.',
+     verify:'Geo filter: lead applicant must be UK-registered.'},
+    {score:58,title:'Clean Energy Manufacturing Prize',funder:'U.S. Dept. of Energy',amt:'$200k',due:'Rolling',open:false,
+     why:'<b>Adjacent:</b> energy theme aligns; this is a prize/award track, not an open call.',
+     verify:'Type: historical/award program — flagged so you don\'t mistake it for an open call.'}
+  ];
+
+  function renderCards(name){
+    const box=document.getElementById('cards');
+    box.innerHTML='';
+    GRANTS.forEach((g,i)=>{
+      const el=document.createElement('div');
+      el.className='card';
+      el.innerHTML=`
+        <div>
+          <div class="score">${g.score}<small>% FIT</small></div>
+          <div class="bar"><i style="width:${g.score}%"></i></div>
+        </div>
+        <div>
+          <div class="ttl">${g.title}</div>
+          <div class="funder">${g.funder}</div>
+          <div class="meta"><span class="amt">${g.amt}</span><span class="due">${g.due}</span><span style="color:var(--muted)">${g.open?'Open call':'Award / prize'}</span></div>
+          <div class="why">${g.why}</div>
+          <div class="verify">${g.verify}</div>
+        </div>
+        <button class="save" data-i="${i}">Save</button>`;
+      box.appendChild(el);
+    });
+    box.querySelectorAll('.save').forEach(s=>s.onclick=()=>{
+      s.classList.toggle('on'); s.textContent=s.classList.contains('on')?'Saved ✓':'Save';
+    });
+  }
+
+  // ── flow ──
+  document.getElementById('go').onclick=()=>{
+    const btn=document.getElementById('go');
+    const name=(document.getElementById('company').value||'your company').trim();
+    btn.querySelector('span').textContent='Matching…';
+    setTimeout(()=>{
+      renderCards(name);
+      document.getElementById('mTitle').textContent=`6 matches for ${name}`;
+      document.getElementById('view-intake').classList.add('hide');
+      document.getElementById('view-matches').classList.remove('hide');
+      window.scrollTo(0,0);
+      btn.querySelector('span').textContent='Find my grants';
+    },600);
+  };
+  document.getElementById('back').onclick=()=>{
+    document.getElementById('view-matches').classList.add('hide');
+    document.getElementById('view-intake').classList.remove('hide');
+    window.scrollTo(0,0);
+  };
+</script>
+</body>
+</html>
