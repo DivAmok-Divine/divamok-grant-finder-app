@@ -104,19 +104,19 @@ export default function GrantModal({ match, onClose }: { match: Match; onClose: 
         ) : null}
 
         <div className="mt-5 rounded-md bg-soft p-4">
-          <div className="text-[12px] font-extrabold uppercase tracking-wider text-brand-press">Why it fits</div>
+          <div className="text-[13px] font-extrabold text-brand-press">Why it fits</div>
           <p className="mt-1.5 text-[14.5px] leading-relaxed text-ink">
             <b className="font-bold">{why.lead}</b> {why.rest}
           </p>
         </div>
 
         <div className="mt-3 rounded-md bg-[#F1F4F2] p-4">
-          <div className="text-[12px] font-extrabold uppercase tracking-wider text-muted">What to verify</div>
+          <div className="text-[13px] font-extrabold text-muted">What to verify</div>
           <p className="mt-1.5 text-[14px] leading-relaxed text-[#5F6E66]">{verify}</p>
         </div>
 
         <div className="mt-5">
-          <div className="text-[12px] font-extrabold uppercase tracking-wider text-muted">Summary</div>
+          <div className="text-[13px] font-extrabold text-muted">Summary</div>
           {grant.description ? (
             <div className="mt-2 space-y-3">
               {toParagraphs(grant.description).map((p, i) => (

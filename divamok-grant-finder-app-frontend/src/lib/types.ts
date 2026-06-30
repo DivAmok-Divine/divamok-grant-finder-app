@@ -46,4 +46,6 @@ export interface Match {
   why: { lead: string; rest: string }
   /** the eligibility caveat to check before applying */
   verify: string
+  /** set once the AI re-rank layer (Gemini) has scored this match */
+  ai?: { relevance: number; reason: string }
 }

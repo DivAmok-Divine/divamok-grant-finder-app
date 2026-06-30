@@ -3,6 +3,9 @@ import type { ReactNode } from 'react'
 import type { Grant, Match, Profile } from './types'
 import { bundledGrants } from './grantsData'
 
+/** lifecycle of the AI re-rank pass for the current results */
+export type AiState = 'idle' | 'ranking' | 'done' | 'error'
+
 interface Store {
   /** the grant dataset matched against — starts as the bundled snapshot,
    *  replaced with a fresh live pull on login */
@@ -14,6 +17,11 @@ interface Store {
   profile: Profile | null
   results: Match[]
   setRun: (profile: Profile, results: Match[]) => void
+  /** swap in re-ranked results (e.g. after the AI pass) without changing profile */
+  setResults: (results: Match[]) => void
+  /** progress of the AI re-rank for the current run */
+  aiState: AiState
+  setAiState: (s: AiState) => void
 }
 
 const Ctx = createContext<Store | null>(null)
@@ -23,6 +31,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [refreshing, setRefreshing] = useState(false)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [results, setResults] = useState<Match[]>([])
+  const [aiState, setAiState] = useState<AiState>('idle')
   return (
     <Ctx.Provider
       value={{
@@ -36,6 +45,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           setProfile(p)
           setResults(r)
         },
+        setResults,
+        aiState,
+        setAiState,
       }}
     >
       {children}

@@ -69,10 +69,16 @@ export default function MatchCard({ match }: { match: Match }) {
           ) : null}
 
           <div className="mt-3.5 flex gap-2 text-[14.5px] leading-snug">
-            <span className="font-extrabold text-brand">✓</span>
-            <span>
-              <b className="font-bold">{why.lead}</b> {why.rest}
-            </span>
+            <span className="font-extrabold text-brand">{match.ai?.reason ? '✦' : '✓'}</span>
+            {match.ai?.reason ? (
+              <span>
+                <b className="font-bold">AI match:</b> {match.ai.reason}
+              </span>
+            ) : (
+              <span>
+                <b className="font-bold">{why.lead}</b> {why.rest}
+              </span>
+            )}
           </div>
 
           <div className="mt-3 flex gap-2 rounded-md bg-[#F1F4F2] px-3.5 py-3 text-[13.5px] leading-snug text-[#5F6E66]">

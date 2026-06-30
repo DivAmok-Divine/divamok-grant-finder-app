@@ -23,7 +23,7 @@ function passesFilter(m: Match, f: Filter): boolean {
 }
 
 export default function Matches() {
-  const { profile, results, refreshing } = useStore()
+  const { profile, results, refreshing, aiState } = useStore()
   const navigate = useNavigate()
   const [filter, setFilter] = useState<Filter>('All')
   const [query, setQuery] = useState('')
@@ -64,35 +64,47 @@ export default function Matches() {
 
   return (
     <Layout as="main" className="pt-8 pb-12">
-      <div className="flex flex-col items-start gap-2">
-        {refreshing ? (
-          <span className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 text-[13px] font-semibold text-ink shadow-sm">
-            <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-block border-t-brand" />
-            Updating grants…
-          </span>
-        ) : null}
-        <Link
-          to="/find"
-          className="inline-flex items-center gap-2 rounded-md bg-soft px-4 py-2 text-sm font-bold text-brand-press"
-        >
-          ← Edit profile
-        </Link>
-      </div>
+      <div className="flex items-start justify-between gap-6">
+        <div className="min-w-0">
+          <div className="flex flex-col items-start gap-2">
+            {refreshing ? (
+              <span className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 text-[13px] font-semibold text-ink shadow-sm">
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-block border-t-brand" />
+                Updating grants…
+              </span>
+            ) : null}
+            <Link
+              to="/find"
+              className="inline-flex items-center gap-2 rounded-md bg-soft px-4 py-2 text-sm font-bold text-brand-press"
+            >
+              ← Edit profile
+            </Link>
+            {aiState === 'ranking' ? (
+              <span className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 text-[13px] font-semibold text-brand-press shadow-sm">
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-block border-t-brand" />
+                Refining matches with AI…
+              </span>
+            ) : aiState === 'done' ? (
+              <span className="inline-flex items-center gap-2 rounded-md border border-line bg-soft px-4 py-2 text-[13px] font-bold text-brand-press shadow-sm">
+                <span aria-hidden>✦</span> AI-ranked by relevance
+              </span>
+            ) : null}
+          </div>
 
-      <div className="mb-1 mt-5 flex items-start justify-between gap-6">
-        <div>
-          <h2 className="text-3xl font-extrabold tracking-tight">
-            {results.length} matches for {profile?.company}
-          </h2>
-          <div className="mt-1.5 text-[14.5px] text-muted">
-            Eligibility-ranked · hard filters applied, then matched on meaning
+          <div className="mb-1 mt-5">
+            <h2 className="text-3xl font-extrabold tracking-tight">
+              {results.length} matches for {profile?.company}
+            </h2>
+            <div className="mt-1.5 text-[14.5px] text-muted">
+              Eligibility-ranked · hard filters applied, then matched on meaning
+            </div>
           </div>
         </div>
 
         {profile ? (
-          <div className="hidden w-[330px] shrink-0 rounded-lg border border-line bg-surface p-4 shadow-sm md:block">
+          <div className="hidden w-[400px] shrink-0 rounded-lg border border-line bg-surface p-4 shadow-sm md:block lg:w-[540px]">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-muted">Your profile</span>
+              <span className="text-[13px] font-extrabold text-muted">Your profile</span>
               <Link to="/find" className="text-[12px] font-bold text-brand-press hover:underline">
                 Edit
               </Link>
@@ -106,7 +118,7 @@ export default function Matches() {
             </div>
             {profile.sectors.length ? (
               <div className="mt-3 border-t border-line pt-3">
-                <div className="text-[11px] font-extrabold uppercase tracking-wider text-muted">Sectors</div>
+                <div className="text-[13px] font-extrabold text-muted">Sectors</div>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {profile.sectors.map((s) => (
                     <span key={s} className="rounded-md bg-soft px-2 py-0.5 text-[12px] font-semibold text-brand-press">
@@ -211,8 +223,8 @@ export default function Matches() {
 function Facet({ label, value }: { label: string; value: string }) {
   return (
     <div className="min-w-0">
-      <div className="text-[11px] font-medium text-muted">{label}</div>
-      <div className="truncate text-[13.5px] font-bold text-ink">{value}</div>
+      <div className="text-[13px] font-medium text-muted">{label}</div>
+      <div className="truncate text-[15px] font-bold text-ink">{value}</div>
     </div>
   )
 }

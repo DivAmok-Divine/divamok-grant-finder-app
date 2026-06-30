@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import type { KeyboardEvent } from 'react'
 
 export interface SelectOption {
   value: string
@@ -25,9 +26,25 @@ export default function SearchSelect({
   const ref = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // Latest props/state for the document handler (registered once, would
+  // otherwise close over stale values).
+  const latest = useRef({ query, options, onChange })
+  latest.current = { query, options, onChange }
+
+  // Commit what the user typed if it exactly matches an option label — so
+  // typing "United States" and clicking away still selects it (no silent loss).
+  function commitTyped() {
+    const { query: cur, options: opts, onChange: set } = latest.current
+    const q = cur.trim().toLowerCase()
+    if (!q) return
+    const exact = opts.find((o) => o.label.toLowerCase() === q)
+    if (exact) set(exact.value)
+  }
+
   useEffect(() => {
     function onDoc(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
+        commitTyped()
         setOpen(false)
         setQuery('')
       }
@@ -47,6 +64,21 @@ export default function SearchSelect({
     inputRef.current?.blur()
   }
 
+  function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      if (!q) return
+      // prefer an exact label match, otherwise take the top filtered result
+      const pick = filtered.find((o) => o.label.toLowerCase() === q) ?? filtered[0]
+      if (pick) {
+        e.preventDefault()
+        choose(pick)
+      }
+    } else if (e.key === 'Escape') {
+      setOpen(false)
+      setQuery('')
+    }
+  }
+
   // When open, the field shows what you're typing; when closed, the selection.
   const display = open ? query : selected ? `${selected.flag ? `${selected.flag} ` : ''}${selected.label}` : ''
 
@@ -60,6 +92,7 @@ export default function SearchSelect({
           ref={inputRef}
           value={display}
           onFocus={() => setOpen(true)}
+          onKeyDown={onKeyDown}
           onChange={(e) => {
             setQuery(e.target.value)
             setOpen(true)
