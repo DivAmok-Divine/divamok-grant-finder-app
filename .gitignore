@@ -32,4 +32,3 @@ logs/
 *.swp
 
 # Local tooling
-.claude/settings.local.json
